@@ -30,140 +30,129 @@ type (
 		IDValue       string `xml:"IDValue" sql:"varchar(255) NULL"`
 	}
 
-	Title struct {
-		TitleType          int    `xml:"Title>TitleType" sql:"int(10) NOT NULL"`
-		TitleText          string `xml:"Title>TitleText" sql:"varchar(255) NULL"`
-		TitlePrefix        string `xml:"Title>TitlePrefix" sql:"varchar(255) NULL"`
-		TitleWithoutPrefix string `xml:"Title>TitleWithoutPrefix" sql:"varchar(255) NULL"`
-	}
-	Series struct {
-		TitleOfSeries      string `xml:"Series>TitleOfSeries" sql:"varchar(255) NULL"`
-		NumberWithinSeries string `xml:"Series>NumberWithinSeries" sql:"int(10) NOT NULL DEFAULT 0"`
-	}
+	// // BLOCK 1
+	// DescriptiveDetail struct {
+	// 	// ProductComposition int `xml:"ProductComposition" sql:"int(10) NULL"`
+	// 	// EpubUsageConstraint []EpubUsageConstraint
+	// 	// // TitleDetail
+	// 	Contributor []Contributor `xml:"DescriptiveDetail>Contributor"`
+	// 	// Subject []Subject
+	// 	// Audience
+	// }
 
-	Website struct {
-		WebsiteLink string `xml:"Website>WebsiteLink" sql:"text NULL"`
-	}
+	// EpubUsageConstraint struct {
+	// 	EpubUsageType int `xml:"EpubUsageType" sql:"int(10) NOT NULL"`
+	// 	EpubUsageStatus int `xml:"EpubUsageStatus" sql:"int(10) NOT NULL"`
+	// }
 
+	// // P.6 Product title detail
+	// // TitleDetail struct {
+	// // 	TitleType int `xml:"TitleType" sql:"int(10) NOT NULL"`
+	// // 	TitleElementLevel int `xml:"TitleElement>TitleElementLevel" sql:"int(10) NOT NULL"`
+	// // 	TitleText string `xml:"TitleElement>TitleText" sql:"varchar(255) NULL"`
+	// // 	TitlePrefix string `xml:"TitleElement>TitlePrefix" sql:"varchar(255) NULL"`
+	// // 	TitleWithoutPrefix string `xml:"TitleElement>TitleWithoutPrefix" sql:"varchar(255) NULL"`
+	// // 	Subtitle string `xml:"TitleElement>Subtitle" sql:"varchar(255) NULL"`
+	// // }
+
+	// // P.7 Authorship
 	Contributor struct {
-		SequenceNumber     int    `xml:"SequenceNumber" sql:"int(10) NOT NULL"`
-		ContributorRole    string `xml:"ContributorRole" sql:"varchar(255) NULL"`
-		PersonNameInverted string `xml:"PersonNameInverted" sql:"varchar(255) NULL"`
-		TitlesBeforeNames  string `xml:"TitlesBeforeNames" sql:"varchar(255) NULL"`
-		KeyNames           string `xml:"KeyNames" sql:"varchar(255) NULL"`
+		SequenceNumber    int    `xml:"SequenceNumber" sql:"int(10) NULL"`
+		ContributorRole   string `xml:"ContributorRole" sql:"varchar(20) NOT NULL"`
+		PersonName        string `xml:"PersonName" sql:"varchar(255) NULL"`
+		TitlesBeforeNames string `xml:"TitlesBeforeNames" sql:"varchar(100) NULL"`
+		NamesBeforeKey    string `xml:"NamesBeforeKey" sql:"varchar(100) NULL"`
+		KeyNames          string `xml:"KeyNames" sql:"varchar(100) NULL"`
 	}
 
+	// // P.12 Subject
 	Subject struct {
 		SubjectSchemeIdentifier int    `xml:"SubjectSchemeIdentifier" sql:"int(10) NOT NULL"`
-		SubjectCode             string `xml:"SubjectCode" sql:"varchar(255) NULL"`
+		SubjectCode             string `xml:"SubjectCode" sql:"varchar(100) NULL"`
+		SubjectHeadingText      string `xml:"SubjectHeadingText" sql:"varchar(255) NULL"`
 	}
 
-	Extent struct {
-		ExtentType  int `xml:"Extent>ExtentType" sql:"int(10) NOT NULL DEFAULT 0"`
-		ExtentValue int `xml:"Extent>ExtentValue" sql:"int(10) NOT NULL DEFAULT 0"`
-		ExtentUnit  int `xml:"Extent>ExtentUnit" sql:"int(10) NOT NULL DEFAULT 0"`
+	// // P.13 Audience
+	// Audience struct {
+	// 	AudienceCodeType int `xml:"AudienceCodeType" sql:"int(10) NOT NULL"`
+	// 	AudienceCodeValue int `xml:"AudienceCodeValue" sql:"int(10) NOT NULL"`
+	// }
+
+	// // Block 2: Marketing collateral detail
+	// CollateralDetail struct {
+	// 	TextContent []TextContent
+	// 	SupportingResource
+	// }
+
+	TextContent struct {
+		TextType        int    `xml:"TextType" sql:"int(10) NOT NULL"`
+		ContentAudience int    `xml:"ContentAudience" sql:"int(10) NOT NULL"`
+		Text            string `xml:"Text" sql:"TEXT NOT NULL"`
+		SourceTitle     string `xml:"SourceTitle" sql:"varchar(255) NULL"`
 	}
 
-	OtherText struct {
-		TextTypeCode int    `xml:"TextTypeCode" sql:"int(10) NOT NULL"`
-		Text         string `xml:"Text" sql:"text NULL"`
+	SupportingResource struct {
+		ResourceContentType int `xml:"ResourceContentType" sql:"int(10) NOT NULL"`
+		ContentAudience     int `xml:"ContentAudience" sql:"int(10) NOT NULL"`
+		ResourceMode        int `xml:"ResourceMode" sql:"int(10) NOT NULL"`
+		ResourceVersion     []ResourceVersion
 	}
 
-	MediaFile struct {
-		MediaFileTypeCode     int    `xml:"MediaFile>MediaFileTypeCode" sql:"int(10) NOT NULL"`
-		MediaFileLinkTypeCode int    `xml:"MediaFile>MediaFileLinkTypeCode" sql:"int(10) NOT NULL"`
-		MediaFileLink         string `xml:"MediaFile>MediaFileLink" sql:"text NULL"`
-	}
-
-	Imprint struct {
-		ImprintName string `xml:"Imprint>ImprintName" sql:"varchar(255) NULL"`
-	}
-	Publisher struct {
-		PublishingRole int    `xml:"Publisher>PublishingRole" sql:"int(10) NOT NULL"`
-		PublisherName  string `xml:"Publisher>PublisherName" sql:"varchar(255) NULL"`
-	}
-
-	SalesRights struct {
-		SalesRightsType int    `xml:"SalesRights>SalesRightsType" sql:"int(10) NOT NULL"`
-		RightsCountry   string `xml:"SalesRights>RightsCountry" sql:"varchar(2) NULL"`
-	}
-
-	SalesRestriction struct {
-		SalesRestrictionType int `xml:"SalesRestriction>SalesRestrictionType" sql:"int(10) NOT NULL"`
-	}
-
-	Measure struct {
-		MeasureTypeCode int    `xml:"Measure>MeasureTypeCode" sql:"int(10) NOT NULL"`
-		Measurement     string `xml:"Measure>Measurement" sql:"decimal(10,2) NOT NULL DEFAULT 0"`
-		MeasureUnitCode string `xml:"Measure>MeasureUnitCode" sql:"varchar(10) NULL"`
+	//todo parse more for valid images
+	ResourceVersion struct {
+		ResourceLink string `xml:"ResourceLink" sql:"varchar(255) NOT NULL"`
 	}
 
 	RelatedProduct struct {
-		RelationCode  int    `xml:"RelatedProduct>RelationCode" sql:"int(10) NOT NULL"`
-		ProductIDType int    `xml:"RelatedProduct>ProductIdentifier>ProductIDType" sql:"int(10) NOT NULL"`
-		IDValue       string `xml:"RelatedProduct>ProductIdentifier>IDValue" sql:"bigint(15) NOT NULL"`
+		ProductRelationCode int    `xml:"ProductRelationCode" sql:"int(10) NOT NULL"`
+		ProductIDType       int    `xml:"ProductIdentifier>ProductIDType" sql:"int(10) NOT NULL"`
+		IDValue             string `xml:"ProductIdentifier>IDValue" sql:"bigint(15) NOT NULL"`
 	}
 
-	Price struct {
-		SupplierName     string `sql:"varchar(255) NOT NULL"` // only used in SQL table
-		PriceTypeCode    int    `xml:"PriceTypeCode" sql:"int(10) NOT NULL DEFAULT 0"`
-		DiscountCodeType int    `xml:"DiscountCoded>DiscountCodeType" sql:"int(10) NOT NULL DEFAULT 0"`
-		DiscountCode     string `xml:"DiscountCoded>DiscountCode" sql:"varchar(10)  NULL"`
-		PriceAmount      string `xml:"PriceAmount" sql:"decimal(10,2) NOT NULL DEFAULT 0"`
-		CurrencyCode     string `xml:"CurrencyCode" sql:"varchar(10) NULL"`
-		CountryCode      string `xml:"CountryCode" sql:"varchar(10) NULL"`
-	}
+	// // Block 6: Product supply
+	// ProductSupply struct {
+	// 	SupplyDetail []SupplyDetail
+	// }
 
 	SupplyDetail struct {
-		SupplierName        string `xml:"SupplierName" sql:"varchar(255) NOT NULL"`
-		SupplierRole        int    `xml:"SupplierRole" sql:"int(10) NOT NULL DEFAULT 0"`
-		SupplyToCountry     string `xml:"SupplyToCountry" sql:"varchar(255) NULL"`
+		SupplierName        string `xml:"Supplier>SupplierName" sql:"varchar(255) NOT NULL"`
 		ProductAvailability int    `xml:"ProductAvailability" sql:"int(10) NOT NULL DEFAULT 0"`
-		ExpectedShipDate    string `xml:"ExpectedShipDate" sql:"date NULL"`
-		OnHand              int    `xml:"Stock>OnHand" sql:"int(10) NOT NULL DEFAULT 0"`
-		OnOrder             int    `xml:"Stock>OnOrder" sql:"int(10) NOT NULL DEFAULT 0"`
-		PackQuantity        int    `xml:"PackQuantity" sql:"int(10) NOT NULL DEFAULT 0"`
 		Price               []Price
 	}
 
-	MarketRepresentation struct {
-		AgentName              string `xml:"MarketRepresentation>AgentName" sql:"varchar(255) NOT NULL"`
-		AgentRole              int    `xml:"MarketRepresentation>AgentRole" sql:"int(10) NOT NULL DEFAULT 0"`
-		MarketCountry          string `xml:"MarketRepresentation>MarketCountry" sql:"varchar(4) NULL"`
-		MarketPublishingStatus int    `xml:"MarketRepresentation>MarketPublishingStatus" sql:"int(10) NOT NULL DEFAULT 0"`
-		MarketDateRole         int    `xml:"MarketRepresentation>MarketDate>MarketDateRole" sql:"int(5) NOT NULL DEFAULT 0"`
-		MarketDate             string `xml:"MarketRepresentation>MarketDate>Date" sql:"varchar(255) NOT NULL"`
+	Price struct {
+		SupplierName       string `sql:"varchar(255) NOT NULL"`
+		PriceType          int    `xml:"PriceType" sql:"int(10) NOT NULL DEFAULT 0"`
+		PriceQualifier     int    `xml:"PriceQualifier" sql:"int(10) NOT NULL DEFAULT 0"`
+		PriceAmount        string `xml:"PriceAmount" sql:"decimal(10,2) NOT NULL DEFAULT 0"`
+		CurrencyCode       string `xml:"CurrencyCode" sql:"varchar(10) NULL"`
+		PriceConditionType int    `xml:"PriceCondition>PriceConditionType" sql:"int(10) NOT NULL DEFAULT 0"`
 	}
 
 	Product struct {
-		RecordReference   string `xml:"RecordReference" sql:"bigint(15) NOT NULL DEFAULT 0"`
-		NotificationType  int    `xml:"NotificationType" sql:"int(10) NOT NULL DEFAULT 0"`
-		ProductIdentifier []ProductIdentifier
-		ProductForm       string `xml:"ProductForm" sql:"varchar(20) NULL"`
-		ProductFormDetail string `xml:"ProductFormDetail" sql:"varchar(20) NULL"`
-		Series
-		Title
-		Website
-		Contributor []Contributor
-		Subject     []Subject
-		Extent
-		EditionNumber     string `xml:"EditionNumber" sql:"varchar(255) NULL"`
-		NumberOfPages     string `xml:"NumberOfPages" sql:"int(10) NOT NULL DEFAULT 0"`
-		IllustrationsNote string `xml:"IllustrationsNote" sql:"varchar(255) NULL"`
-		BICMainSubject    string `xml:"BICMainSubject" sql:"varchar(20) NULL"`
-		OtherText         []OtherText
-		AudienceCode      string `xml:"AudienceCode" sql:"int(10) NOT NULL DEFAULT 0"`
-		MediaFile
-		Imprint
-		Publisher
-		SalesRights
-		SalesRestriction
-		PublishingStatus   int    `xml:"PublishingStatus" sql:"int(10) NOT NULL DEFAULT 0"`
-		PublicationDate    string `xml:"PublicationDate" sql:"varchar(255) NULL"`
-		YearFirstPublished string `xml:"YearFirstPublished" sql:"varchar(255) NULL"`
-		Measure
-		RelatedProduct
-		SupplyDetail []SupplyDetail
-		MarketRepresentation
+		RecordReference         string `xml:"RecordReference" sql:"varchar(255) NOT NULL"`
+		NotificationType        int    `xml:"NotificationType" sql:"int(10) NOT NULL DEFAULT 0"`
+		ProductIdentifier       []ProductIdentifier
+		ProductForm             string             `xml:"DescriptiveDetail>ProductForm" sql:"varchar(20) NULL"`
+		ProductFormDetail       string             `xml:"DescriptiveDetail>ProductFormDetail" sql:"varchar(20) NULL"`
+		EpubTechnicalProtection int                `xml:"DescriptiveDetail>EpubTechnicalProtection" sql:"int(10) NULL"`
+		TitleType               int                `xml:"DescriptiveDetail>TitleDetail>TitleType" sql:"int(10) NOT NULL"`
+		TitleElementLevel       int                `xml:"DescriptiveDetail>TitleDetail>TitleElement>TitleElementLevel" sql:"int(10) NOT NULL"`
+		TitleText               string             `xml:"DescriptiveDetail>TitleDetail>TitleElement>TitleText" sql:"varchar(255) NULL"`
+		TitlePrefix             string             `xml:"DescriptiveDetail>TitleDetail>TitleElement>TitlePrefix" sql:"varchar(255) NULL"`
+		TitleWithoutPrefix      string             `xml:"DescriptiveDetail>TitleDetail>TitleElement>TitleWithoutPrefix" sql:"varchar(255) NULL"`
+		Subtitle                string             `xml:"DescriptiveDetail>TitleDetail>TitleElement>Subtitle" sql:"varchar(255) NULL"`
+		Contributor             []Contributor      `xml:"DescriptiveDetail>Contributor"`
+		Subject                 []Subject          `xml:"DescriptiveDetail>Subject"`
+		TextContent             []TextContent      `xml:"CollateralDetail>TextContent"`
+		SupportingResource      SupportingResource `xml:"CollateralDetail>SupportingResource"`
+		// DescriptiveDetail
+		// CollateralDetail
+		ImprintName      string           `xml:"PublishingDetail>Imprint>ImprintName" sql:"varchar(255) NULL"`
+		PublisherName    string           `xml:"PublishingDetail>Publisher>PublisherName" sql:"varchar(255) NULL"`
+		PublishingStatus int              `xml:"PublishingDetail>PublishingStatus" sql:"int(10) NOT NULL DEFAULT 0"`
+		PublishingDate   string           `xml:"PublishingDetail>PublishingDate>Date" sql:"varchar(255) NULL"`
+		RelatedProduct   []RelatedProduct `xml:"RelatedMaterial>RelatedProduct"`
+		SupplyDetail     []SupplyDetail   `xml:"ProductSupply>SupplyDetail"`
 	}
 )

@@ -43,10 +43,8 @@ func ParseXmlElementsConcurrent(prod *Product, appConfigArg *gonfig.AppConfigura
 			prodIdentifier.Xml2Csv(prod.RecordReference)
 		}
 	}
-	prod.Title.Xml2Csv(prod.RecordReference)
-	prod.Series.Xml2Csv(prod.RecordReference)
-	prod.Website.Xml2Csv(prod.RecordReference)
-	prod.Extent.Xml2Csv(prod.RecordReference)
+
+	// prod.DescriptiveDetail.Xml2Csv(prod.RecordReference)
 
 	if len(prod.Contributor) > 0 {
 		for _, prodContributor := range prod.Contributor {
@@ -54,29 +52,59 @@ func ParseXmlElementsConcurrent(prod *Product, appConfigArg *gonfig.AppConfigura
 		}
 	}
 
+	if len(prod.TextContent) > 0 {
+		for _, prodTextContent := range prod.TextContent {
+			prodTextContent.Xml2Csv(prod.RecordReference)
+		}
+	}
+
+	prod.SupportingResource.Xml2Csv(prod.RecordReference)
+
 	if len(prod.Subject) > 0 {
 		for _, prodSubject := range prod.Subject {
 			prodSubject.Xml2Csv(prod.RecordReference)
 		}
 	}
+
+	if len(prod.RelatedProduct) > 0 {
+		for _, prodRelatedProduct := range prod.RelatedProduct {
+			prodRelatedProduct.Xml2Csv(prod.RecordReference)
+		}
+	}
+
 	if len(prod.SupplyDetail) > 0 {
 		for _, prodSupplyDetail := range prod.SupplyDetail {
 			prodSupplyDetail.Xml2Csv(prod.RecordReference)
 		}
 	}
+	// prod.Title.Xml2Csv(prod.RecordReference)
+	// prod.Series.Xml2Csv(prod.RecordReference)
+	// prod.Website.Xml2Csv(prod.RecordReference)
+	// prod.Extent.Xml2Csv(prod.RecordReference)
 
-	if len(prod.OtherText) > 0 {
-		for _, prodOtherText := range prod.OtherText {
-			prodOtherText.Xml2Csv(prod.RecordReference)
-		}
-	}
-	prod.MediaFile.Xml2Csv(prod.RecordReference)
-	prod.Imprint.Xml2Csv(prod.RecordReference)
-	prod.Publisher.Xml2Csv(prod.RecordReference)
-	prod.SalesRights.Xml2Csv(prod.RecordReference)
-	prod.SalesRestriction.Xml2Csv(prod.RecordReference)
-	prod.Measure.Xml2Csv(prod.RecordReference)
-	prod.RelatedProduct.Xml2Csv(prod.RecordReference)
-	prod.MarketRepresentation.Xml2Csv(prod.RecordReference)
+	// if len(prod.Subject) > 0 {
+	// 	for _, prodSubject := range prod.Subject {
+	// 		prodSubject.Xml2Csv(prod.RecordReference)
+	// 	}
+	// }
+	// if len(prod.SupplyDetail) > 0 {
+	// 	for _, prodSupplyDetail := range prod.SupplyDetail {
+	// 		prodSupplyDetail.Xml2Csv(prod.RecordReference)
+	// 	}
+	// }
+
+	// if len(prod.OtherText) > 0 {
+	// 	for _, prodOtherText := range prod.OtherText {
+	// 		prodOtherText.Xml2Csv(prod.RecordReference)
+	// 	}
+	// }
+	// prod.MediaFile.Xml2Csv(prod.RecordReference)
+	// prod.Imprint.Xml2Csv(prod.RecordReference)
+	// prod.Publisher.Xml2Csv(prod.RecordReference)
+	// prod.SalesRights.Xml2Csv(prod.RecordReference)
+	// prod.SalesRestriction.Xml2Csv(prod.RecordReference)
+	// prod.Measure.Xml2Csv(prod.RecordReference)
+	// prod.RelatedProduct.Xml2Csv(prod.RecordReference)
+	// prod.MarketRepresentation.Xml2Csv(prod.RecordReference)
 
 }
