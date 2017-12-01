@@ -27,6 +27,7 @@ package onixStructs
 type (
 	ProductIdentifier struct {
 		ProductIDType int    `xml:"ProductIDType" sql:"bigint(14)"`
+		IDTypeName    string `xml:"IDTypeName" sql:"varchar(255) NULL"`
 		IDValue       string `xml:"IDValue" sql:"varchar(255) NULL"`
 	}
 

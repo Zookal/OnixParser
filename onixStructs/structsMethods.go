@@ -114,7 +114,8 @@ func (p *ProductIdentifier) Xml2Csv(id string) {
 		_, writeErr := writeOneElementToFile(p, map[int]string{
 			0: id,
 			1: strconv.Itoa(p.ProductIDType),
-			2: p.IDValue,
+			2: p.IDTypeName,
+			3: p.IDValue,
 		})
 		appConfig.HandleErr(writeErr)
 	}
