@@ -31,31 +31,6 @@ type (
 		IDValue       string `xml:"IDValue" sql:"varchar(255) NULL"`
 	}
 
-	// // BLOCK 1
-	// DescriptiveDetail struct {
-	// 	// ProductComposition int `xml:"ProductComposition" sql:"int(10) NULL"`
-	// 	// EpubUsageConstraint []EpubUsageConstraint
-	// 	// // TitleDetail
-	// 	Contributor []Contributor `xml:"DescriptiveDetail>Contributor"`
-	// 	// Subject []Subject
-	// 	// Audience
-	// }
-
-	// EpubUsageConstraint struct {
-	// 	EpubUsageType int `xml:"EpubUsageType" sql:"int(10) NOT NULL"`
-	// 	EpubUsageStatus int `xml:"EpubUsageStatus" sql:"int(10) NOT NULL"`
-	// }
-
-	// // P.6 Product title detail
-	// // TitleDetail struct {
-	// // 	TitleType int `xml:"TitleType" sql:"int(10) NOT NULL"`
-	// // 	TitleElementLevel int `xml:"TitleElement>TitleElementLevel" sql:"int(10) NOT NULL"`
-	// // 	TitleText string `xml:"TitleElement>TitleText" sql:"varchar(255) NULL"`
-	// // 	TitlePrefix string `xml:"TitleElement>TitlePrefix" sql:"varchar(255) NULL"`
-	// // 	TitleWithoutPrefix string `xml:"TitleElement>TitleWithoutPrefix" sql:"varchar(255) NULL"`
-	// // 	Subtitle string `xml:"TitleElement>Subtitle" sql:"varchar(255) NULL"`
-	// // }
-
 	// // P.7 Authorship
 	Contributor struct {
 		SequenceNumber    int    `xml:"SequenceNumber" sql:"int(10) NULL"`
@@ -72,18 +47,6 @@ type (
 		SubjectCode             string `xml:"SubjectCode" sql:"varchar(100) NULL"`
 		SubjectHeadingText      string `xml:"SubjectHeadingText" sql:"varchar(255) NULL"`
 	}
-
-	// // P.13 Audience
-	// Audience struct {
-	// 	AudienceCodeType int `xml:"AudienceCodeType" sql:"int(10) NOT NULL"`
-	// 	AudienceCodeValue int `xml:"AudienceCodeValue" sql:"int(10) NOT NULL"`
-	// }
-
-	// // Block 2: Marketing collateral detail
-	// CollateralDetail struct {
-	// 	TextContent []TextContent
-	// 	SupportingResource
-	// }
 
 	TextContent struct {
 		TextType        int    `xml:"TextType" sql:"int(10) NOT NULL"`
@@ -109,11 +72,6 @@ type (
 		ProductIDType       int    `xml:"ProductIdentifier>ProductIDType" sql:"int(10) NOT NULL"`
 		IDValue             string `xml:"ProductIdentifier>IDValue" sql:"bigint(15) NOT NULL"`
 	}
-
-	// // Block 6: Product supply
-	// ProductSupply struct {
-	// 	SupplyDetail []SupplyDetail
-	// }
 
 	SupplyDetail struct {
 		SupplierName        string `xml:"Supplier>SupplierName" sql:"varchar(255) NOT NULL"`

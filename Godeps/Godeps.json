@@ -1,5 +1,5 @@
 {
-	"ImportPath": "github.com/SchumacherFM/OnixParser",
+	"ImportPath": "github.com/Zookal/OnixParser",
 	"GoVersion": "go1.4",
 	"Packages": [
 		"./..."

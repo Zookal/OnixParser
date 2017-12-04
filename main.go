@@ -27,11 +27,11 @@ import (
 	"runtime"
 	"time"
 
-	_ "github.com/SchumacherFM/OnixParser/Godeps/_workspace/src/github.com/go-sql-driver/mysql"
+	_ "github.com/Zookal/OnixParser/Godeps/_workspace/src/github.com/go-sql-driver/mysql"
 
-	"github.com/SchumacherFM/OnixParser/gonfig"
-	"github.com/SchumacherFM/OnixParser/onixml"
-	"github.com/SchumacherFM/OnixParser/sqlCreator"
+	"github.com/Zookal/OnixParser/gonfig"
+	"github.com/Zookal/OnixParser/onixml"
+	"github.com/Zookal/OnixParser/sqlCreator"
 )
 
 var appConfig = gonfig.NewAppConfiguration()

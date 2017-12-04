@@ -26,10 +26,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/SchumacherFM/OnixParser/Godeps/_workspace/src/github.com/go-sql-driver/mysql"
-	"github.com/SchumacherFM/OnixParser/gonfig"
-	. "github.com/SchumacherFM/OnixParser/onixStructs"
-	"github.com/SchumacherFM/OnixParser/sqlCreator"
+	"github.com/Zookal/OnixParser/Godeps/_workspace/src/github.com/go-sql-driver/mysql"
+	"github.com/Zookal/OnixParser/gonfig"
+	. "github.com/Zookal/OnixParser/onixStructs"
+	"github.com/Zookal/OnixParser/sqlCreator"
 )
 
 var appConfig *gonfig.AppConfiguration
