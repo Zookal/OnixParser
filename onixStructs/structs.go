@@ -64,7 +64,14 @@ type (
 
 	//todo parse more for valid images
 	ResourceVersion struct {
-		ResourceLink string `xml:"ResourceLink" sql:"varchar(255) NOT NULL"`
+		ResourceLink           string `xml:"ResourceLink" sql:"varchar(255) NOT NULL"`
+		ImageHeight            string `sql:"varchar(255) NOT NULL"`
+		ResourceVersionFeature []ResourceVersionFeature
+	}
+
+	ResourceVersionFeature struct {
+		ResourceVersionFeatureType int    `xml:"ResourceVersionFeatureType" sql:"int(10) NOT NULL"`
+		FeatureValue               string `xml:"FeatureValue" sql:"varchar(255) NOT NULL"`
 	}
 
 	RelatedProduct struct {

@@ -131,26 +131,17 @@ func (r *RelatedProduct) Xml2Csv(id string) {
 	appConfig.HandleErr(writeErr)
 }
 
-// func (d *DescriptiveDetail) Xml2Csv(id string) {
-// 	_, writeErr := writeOneElementToFile(d, map[int]string{
-// 			0: id,
-// 		})
-// 		appConfig.HandleErr(writeErr)
-// }
-
 func (c *Contributor) Xml2Csv(id string) {
-	if c.SequenceNumber > 0 {
-		_, writeErr := writeOneElementToFile(c, map[int]string{
-			0: id,
-			1: strconv.Itoa(c.SequenceNumber),
-			2: c.ContributorRole,
-			3: c.PersonName,
-			4: c.TitlesBeforeNames,
-			5: c.NamesBeforeKey,
-			6: c.KeyNames,
-		})
-		appConfig.HandleErr(writeErr)
-	}
+	_, writeErr := writeOneElementToFile(c, map[int]string{
+		0: id,
+		1: strconv.Itoa(c.SequenceNumber),
+		2: c.ContributorRole,
+		3: c.PersonName,
+		4: c.TitlesBeforeNames,
+		5: c.NamesBeforeKey,
+		6: c.KeyNames,
+	})
+	appConfig.HandleErr(writeErr)
 }
 
 func (t *TextContent) Xml2Csv(id string) {
@@ -184,9 +175,18 @@ func (s *SupportingResource) Xml2Csv(id string) {
 }
 
 func (r *ResourceVersion) Xml2Csv(id string) {
+	var FeatureValue string
+	if len(r.ResourceVersionFeature) > 0 {
+		for _, rResourceVersionFeature := range r.ResourceVersionFeature {
+			if rResourceVersionFeature.ResourceVersionFeatureType == 2 { // 2 mean image height
+				FeatureValue = rResourceVersionFeature.FeatureValue
+			}
+		}
+	}
 	_, writeErr := writeOneElementToFile(r, map[int]string{
 		0: id,
 		1: r.ResourceLink,
+		2: FeatureValue,
 	})
 	appConfig.HandleErr(writeErr)
 }
