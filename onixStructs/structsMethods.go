@@ -104,6 +104,7 @@ func (p *Product) Xml2CsvRoot() {
 		13: p.PublisherName,
 		14: strconv.Itoa(p.PublishingStatus),
 		15: p.PublishingDate,
+		16: strconv.Itoa(p.EditionNumber),
 		// 7:  strconv.Itoa(p.TitleElementLevel),
 	})
 	appConfig.HandleErr(writeErr)
@@ -140,6 +141,7 @@ func (c *Contributor) Xml2Csv(id string) {
 		4: c.TitlesBeforeNames,
 		5: c.NamesBeforeKey,
 		6: c.KeyNames,
+		7: c.CorporateName,
 	})
 	appConfig.HandleErr(writeErr)
 }
@@ -224,6 +226,18 @@ func (p *Price) Xml2Csv(id string, supplierName string) {
 		4: p.PriceAmount,
 		5: p.CurrencyCode,
 		6: strconv.Itoa(p.PriceConditionType),
+		7: strconv.Itoa(p.Quantity),
+	})
+	appConfig.HandleErr(writeErr)
+}
+
+func (e *EpubUsageConstraint) Xml2Csv(id string) {
+	_, writeErr := writeOneElementToFile(e, map[int]string{
+		0: id,
+		1: strconv.Itoa(e.EpubUsageType),
+		2: strconv.Itoa(e.EpubUsageStatus),
+		3: strconv.Itoa(e.Quantity),
+		4: strconv.Itoa(e.EpubUsageUnit),
 	})
 	appConfig.HandleErr(writeErr)
 }

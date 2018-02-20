@@ -39,6 +39,7 @@ type (
 		TitlesBeforeNames string `xml:"TitlesBeforeNames" sql:"varchar(100) NULL"`
 		NamesBeforeKey    string `xml:"NamesBeforeKey" sql:"varchar(100) NULL"`
 		KeyNames          string `xml:"KeyNames" sql:"varchar(100) NULL"`
+		CorporateName     string `xml:"CorporateName" sql:"varchar(255) NULL"`
 	}
 
 	// // P.12 Subject
@@ -93,6 +94,14 @@ type (
 		PriceAmount        string `xml:"PriceAmount" sql:"decimal(10,2) NOT NULL DEFAULT 0"`
 		CurrencyCode       string `xml:"CurrencyCode" sql:"varchar(10) NULL"`
 		PriceConditionType int    `xml:"PriceCondition>PriceConditionType" sql:"int(10) NOT NULL DEFAULT 0"`
+		Quantity					 int    `xml:"PriceCondition>PriceConditionQuantity>Quantity" sql:"int(5) NULL"` 
+	}
+
+	EpubUsageConstraint struct {
+		EpubUsageType int `xml:"EpubUsageType" sql:"int(10) NOT NULL DEFAULT 0"`
+		EpubUsageStatus int `xml:"EpubUsageStatus" sql:"int(10) NOT NULL DEFAULT 0"`
+		Quantity int `xml:"EpubUsageLimit>Quantity" sql:"int(10) NOT NULL DEFAULT 0"`
+		EpubUsageUnit int `xml:"EpubUsageLimit>EpubUsageUnit" sql:"int(10) NOT NULL DEFAULT 0"`
 	}
 
 	Product struct {
@@ -110,15 +119,18 @@ type (
 		Subtitle                string             `xml:"DescriptiveDetail>TitleDetail>TitleElement>Subtitle" sql:"varchar(255) NULL"`
 		Contributor             []Contributor      `xml:"DescriptiveDetail>Contributor"`
 		Subject                 []Subject          `xml:"DescriptiveDetail>Subject"`
+		
 		TextContent             []TextContent      `xml:"CollateralDetail>TextContent"`
 		SupportingResource      SupportingResource `xml:"CollateralDetail>SupportingResource"`
 		// DescriptiveDetail
 		// CollateralDetail
-		ImprintName      string           `xml:"PublishingDetail>Imprint>ImprintName" sql:"varchar(255) NULL"`
-		PublisherName    string           `xml:"PublishingDetail>Publisher>PublisherName" sql:"varchar(255) NULL"`
-		PublishingStatus int              `xml:"PublishingDetail>PublishingStatus" sql:"int(10) NOT NULL DEFAULT 0"`
-		PublishingDate   string           `xml:"PublishingDetail>PublishingDate>Date" sql:"varchar(255) NULL"`
-		RelatedProduct   []RelatedProduct `xml:"RelatedMaterial>RelatedProduct"`
-		SupplyDetail     []SupplyDetail   `xml:"ProductSupply>SupplyDetail"`
+		ImprintName      				string           `xml:"PublishingDetail>Imprint>ImprintName" sql:"varchar(255) NULL"`
+		PublisherName    				string           `xml:"PublishingDetail>Publisher>PublisherName" sql:"varchar(255) NULL"`
+		PublishingStatus 				int              `xml:"PublishingDetail>PublishingStatus" sql:"int(10) NOT NULL DEFAULT 0"`
+		PublishingDate   				string           `xml:"PublishingDetail>PublishingDate>Date" sql:"varchar(255) NULL"`
+		RelatedProduct   				[]RelatedProduct `xml:"RelatedMaterial>RelatedProduct"`
+		SupplyDetail     				[]SupplyDetail   `xml:"ProductSupply>SupplyDetail"`
+		EditionNumber						int							 `xml:"DescriptiveDetail>EditionNumber" sql:"int(4) NULL"`
+		EpubUsageConstraint			[]EpubUsageConstraint `xml:"DescriptiveDetail>EpubUsageConstraint"`
 	}
 )

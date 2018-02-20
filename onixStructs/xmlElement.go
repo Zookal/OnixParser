@@ -77,4 +77,10 @@ func ParseXmlElementsConcurrent(prod *Product, appConfigArg *gonfig.AppConfigura
 			prodSupplyDetail.Xml2Csv(prod.RecordReference)
 		}
 	}
+
+	if len(prod.EpubUsageConstraint) > 0 {
+		for _, prodEpubUsageConstraint := range prod.EpubUsageConstraint {
+			prodEpubUsageConstraint.Xml2Csv(prod.RecordReference)
+		}
+	}
 }

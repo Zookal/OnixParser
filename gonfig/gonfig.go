@@ -32,7 +32,7 @@ import (
 )
 
 const (
-	AMOUNT_OF_STRUCTS = 10
+	AMOUNT_OF_STRUCTS = 11
 )
 
 var (

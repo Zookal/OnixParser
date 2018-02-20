@@ -25,6 +25,8 @@ import (
 	"runtime"
 	"sync"
 	"time"
+	"io/ioutil"
+	"path/filepath"
 
 	"github.com/Zookal/OnixParser/Godeps/_workspace/src/github.com/go-sql-driver/mysql"
 	"github.com/Zookal/OnixParser/gonfig"
@@ -55,12 +57,31 @@ func OnixmlDecode() (int, int) {
 	appConfig.HandleErr(err)
 	if true == xmlStat.IsDir() {
 		appConfig.Log("%s is a directory ...\n", appConfig.InputFile)
-		return -1, -1
+		// return -1, -1
+		fileInfos, err := ioutil.ReadDir(*appConfig.InputFile)
+		if err != nil {
+        appConfig.Log("Can get input info\n")
+		}
+
+		createTables()
+
+		for _, file := range fileInfos {
+			xmlFile, err := os.Open(filepath.Join(*appConfig.InputFile, file.Name()))
+			appConfig.HandleErr(err)
+			decodeFile(xmlFile, &total, &totalErr)
+    }
+		return total, totalErr
 	}
 
+	createTables()
+
+	decodeFile(xmlFile, &total, &totalErr)
+	return total, totalErr
+}
+
+func decodeFile(xmlFile *os.File, total *int, totalErr *int)(int, int) {
 	defer xmlFile.Close()
 	decoder := xml.NewDecoder(xmlFile)
-	createTables()
 
 	var wg sync.WaitGroup
 	var inElement string
@@ -86,23 +107,23 @@ func OnixmlDecode() (int, int) {
 				decErr := decoder.DecodeElement(&prod, &se)
 				if nil != decErr {
 					appConfig.Log("Decode Error, Type mismatch: %#v\n\n%s\n\n", prod, decErr)
-					totalErr++
+					*totalErr++
 				}
 				wg.Add(1)
 				// go here does not really make sense ... but for learning it is ok
 				go ParseXmlElementsConcurrent(&prod, appConfig, &wg)
 
-				if true == *appConfig.Verbose && total > 0 && 0 == total%1000 {
-					printDuration(timeStart, total)
+				if true == *appConfig.Verbose && *total > 0 && 0 == *total%1000 {
+					printDuration(timeStart, *total)
 					timeStart = time.Now()
 				}
-				total++
+				*total++
 			}
 		default:
 		}
 	}
 	wg.Wait() // wait for the goroutines to finish, is that now redundant regarding the infinite for loop?
-	return total, totalErr
+	return *total, *totalErr
 }
 
 func createTables() {
@@ -119,6 +140,7 @@ func createTables() {
 	structSlice[7] = new(RelatedProduct)
 	structSlice[8] = new(SupplyDetail)
 	structSlice[9] = new(Price)
+	structSlice[10] = new(EpubUsageConstraint)
 
 	for _, theStruct := range structSlice {
 		createTable(theStruct)
