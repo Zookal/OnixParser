@@ -55,6 +55,15 @@ func moreThanMySqlMaxAllowedPacket(tableName string) bool {
 	return false
 }
 
+func parseStock(stock string) string {
+  if strings.ToLower(stock) == "no" {
+    return "0";
+  } else if strings.ToLower(stock) == "yes" {
+    return "99999";
+  }
+  return stock;
+}
+
 func writeOneElementToFile(anyStruct interface{}, args map[int]string) (int, error) {
 	tableName := appConfig.GetNameOfStruct(anyStruct)
 	mapLen := len(args) - 1
@@ -190,8 +199,8 @@ func (s *SupplyDetail) Xml2Csv(id string, header Header) {
 			3: s.SupplyToCountry,
 			4: strconv.Itoa(s.ProductAvailability),
 			5: s.ExpectedShipDate,
-			6: strconv.Itoa(s.OnHand),
-			7: strconv.Itoa(s.OnOrder),
+			6: parseStock(s.OnHand),
+			7: parseStock(s.OnOrder),
 			8: strconv.Itoa(s.PackQuantity),
 		})
 		appConfig.HandleErr(writeErr)

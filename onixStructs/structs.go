@@ -123,8 +123,8 @@ type (
 		SupplyToCountry     string `xml:"SupplyToCountry" sql:"varchar(255) NULL"`
 		ProductAvailability int    `xml:"ProductAvailability" sql:"int(10) NOT NULL DEFAULT 0"`
 		ExpectedShipDate    string `xml:"ExpectedShipDate" sql:"date NULL"`
-		OnHand              int    `xml:"Stock>OnHand" sql:"int(10) NOT NULL DEFAULT 0"`
-		OnOrder             int    `xml:"Stock>OnOrder" sql:"int(10) NOT NULL DEFAULT 0"`
+		OnHand              string `xml:"Stock>OnHand" sql:"int(10) NOT NULL DEFAULT 0"`
+		OnOrder             string `xml:"Stock>OnOrder" sql:"int(10) NOT NULL DEFAULT 0"`
 		PackQuantity        int    `xml:"PackQuantity" sql:"int(10) NOT NULL DEFAULT 0"`
 		Price               []Price
 	}
