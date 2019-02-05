@@ -154,7 +154,7 @@ func createTable(anyStruct interface{}) {
 }
 
 func ImportCsvIntoMysql() {
-	infileTpl := "LOAD DATA LOCAL INFILE '%s' INTO TABLE `%s` FIELDS TERMINATED BY '%c' ENCLOSED BY '%c' LINES TERMINATED BY '%c'"
+	infileTpl := "LOAD DATA LOCAL INFILE '%s' INTO TABLE `%s` CHARACTER SET utf8 FIELDS TERMINATED BY '%c' ENCLOSED BY '%c' LINES TERMINATED BY '%c'"
 
 	for _, tableName := range appConfig.GetOutputFiles() {
 		fileName := appConfig.GetOutputFileName(tableName)
