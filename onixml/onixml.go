@@ -68,6 +68,12 @@ func OnixmlDecode() (int, int) {
 	for {
 		// Read tokens from the XML document in a stream.
 		t, dtErr := decoder.Token()
+		switch dtErr.(type) {
+		case *xml.SyntaxError:
+			appConfig.CloseOutputFiles()
+			appConfig.Panic(dtErr)
+		default:
+		}
 		if t == nil {
 			break
 		}
