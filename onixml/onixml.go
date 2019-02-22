@@ -70,8 +70,8 @@ func OnixmlDecode() (int, int) {
 		t, dtErr := decoder.Token()
 		switch dtErr.(type) {
 		case *xml.SyntaxError:
-			appConfig.CloseOutputFiles()
-			appConfig.Panic(dtErr)
+			totalErr = -2
+			break
 		default:
 		}
 		if t == nil {
