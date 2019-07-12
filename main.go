@@ -92,6 +92,9 @@ func main() {
 	appConfig.GetConnection().Close()
 	appConfig.CloseOutputFiles()
 	printDuration(timeStart)
+	if totalErr == -2 { // syntax error while encoding
+		os.Exit(2)
+	}
 }
 
 func printDuration(timeStart time.Time) {
