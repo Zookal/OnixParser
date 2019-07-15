@@ -115,6 +115,7 @@ type (
 		PriceAmount      string `xml:"PriceAmount" sql:"decimal(10,2) NOT NULL DEFAULT 0"`
 		CurrencyCode     string `xml:"CurrencyCode" sql:"varchar(10) NULL"`
 		CountryCode      string `xml:"CountryCode" sql:"varchar(10) NULL"`
+		DiscountPercent  string `xml:"DiscountPercent" sql:"varchar(10) NULL"`
 	}
 
 	SupplyDetail struct {
