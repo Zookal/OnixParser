@@ -227,6 +227,7 @@ func (p *Price) Xml2Csv(id string, supplierName string) {
 		5: p.PriceAmount,
 		6: p.CurrencyCode,
 		7: p.CountryCode,
+		8: p.DiscountPercent,
 	})
 	appConfig.HandleErr(writeErr)
 }
